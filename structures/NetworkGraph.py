@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import structures.NetworkNode as networkNode
 import structures.NetworkEdge as networkEdge
 import structures.AnimateGraphDijkstra as animateDijsktra
+import helpers.OSFunctions as OSFunctions
 import webbrowser
-import os
 class NetworkGraph:
     def __init__(self, edges, size):
         self.graph = nx.Graph()
@@ -32,7 +32,7 @@ class NetworkGraph:
         
     def drawDijsktraAnimate(self,path,   compressed_path, states , path_length):
         ani = self.animateDijsktra.animateDijkstra(path, compressed_path,  states , path_length ,  self.ax , self.fig )
-        gif_path = os.path.abspath('output/dijkstra_animation.gif')
+        gif_path = OSFunctions.loadGif('output/dijkstra_animation.gif')
         webbrowser.open('file://' + gif_path)
         
 

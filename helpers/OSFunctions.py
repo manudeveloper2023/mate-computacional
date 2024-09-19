@@ -6,3 +6,5 @@ def clear_screen():
             os.system('clear')
 def pause():
         input("\nPresione Enter para continuar...")
+def loadGif(path):
+    return os.path.abspath(path)

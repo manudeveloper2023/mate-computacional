@@ -1,6 +1,4 @@
 import numpy as np 
-import seaborn as sns 
-import matplotlib.pyplot as plt
 import helpers.GraphMatrixDisplay as GraphMatrixDisplay 
 class AdjacencyMatrix:
     def __init__(self , matrixSize):
@@ -46,10 +44,5 @@ class AdjacencyMatrix:
     def visualizeAdjacencyMatrix(self):
         print("Matriz de Adyacencia")
         GraphMatrixDisplay.displayAdjacencyMatrix(self.matrix , self.matrixSize)
-
-    def getAdjacencyMatrixForNetworkx(self):
-        matrixForNetworkx= self.matrix
-        np.fill_diagonal(matrixForNetworkx, 0)
-        return matrixForNetworkx
     def getEdges(self):return self.edges
     def getMatrixSize(self): return self.matrixSize
