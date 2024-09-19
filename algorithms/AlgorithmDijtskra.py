@@ -6,7 +6,6 @@ class AlgorithmDijstkra:
         self.edges = edges
         self.graph = self.createGraphFromEdges(self.edges)
         self.position = nx.spring_layout(self.graph)
-        
     def algorithmDijkstra(self, start, target):
         distances = {node: float('inf') for node in self.graph}
         distances[start] = 0
@@ -14,19 +13,13 @@ class AlgorithmDijstkra:
         priority_queue = [(0, start)]
         states = []
         visited = set()
-
         while priority_queue:
             current_distance, current_node = heapriority_queue.heappop(priority_queue)
-
             if current_node in visited:
                 continue
-
             visited.add(current_node)
-            
-
             if current_node == target:
                 break
-
             for neighbor, weight in self.graph[current_node]:
                 distance = current_distance + weight
                 states.append((current_node , neighbor))
@@ -34,7 +27,6 @@ class AlgorithmDijstkra:
                     distances[neighbor] = distance
                     previous_nodes[neighbor] = current_node
                     heapriority_queue.heappush(priority_queue, (distance, neighbor))
-
         path = []
         current = target
         while current is not None:

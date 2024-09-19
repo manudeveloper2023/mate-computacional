@@ -5,19 +5,17 @@ import structures.NetworkEdge as networkEdge
 import structures.AnimateGraphDijkstra as animateDijsktra
 import webbrowser
 import os
-import time 
 class NetworkGraph:
     def __init__(self, edges, size):
         self.graph = nx.Graph()
         self.size = size
         self.graph.add_weighted_edges_from(edges)
-        self.position = nx.spring_layout(self.graph, k=3)
+        self.position = nx.spring_layout(self.graph, k=3 , iterations=100)
         self.networkNode = self.choiceSizeNodes()
         self.networkEdge = networkEdge.NetworkEdge(graph=self.graph, position_edge=self.position, edge_width=1)
-        self.fig, self.ax = plt.subplots(figsize=(12, 8))
+        self.fig, self.ax = plt.subplots(figsize=(15, 15))
         self.animateDijsktra = animateDijsktra.AnimateGraphDijkstra(networkEdge=self.networkEdge, networkNode=self.networkNode,
                                                     graph=self.graph, networkGraph=self)
-
     def drawGraph(self, node_colors=None, edge_colors=None):
         self.ax.clear()
         self.ax.axis('off')
@@ -31,9 +29,10 @@ class NetworkGraph:
             return networkNode.NetworkNode(node_size=500, position_node=self.position, graph=self.graph, font_size=8)
         else:
             return networkNode.NetworkNode(node_size=1500, position_node=self.position, graph=self.graph, font_size=10)
-    def drawDijsktraAnimate(self, path, states):
-        ani = self.animateDijsktra.animateDijkstra(path, states , self.ax , self.fig)
-        gif_path = os.path.abspath('dijsktra_animation.gif')
+        
+    def drawDijsktraAnimate(self,path,   compressed_path, states , path_length):
+        ani = self.animateDijsktra.animateDijkstra(path, compressed_path,  states , path_length ,  self.ax , self.fig )
+        gif_path = os.path.abspath('output/dijkstra_animation.gif')
         webbrowser.open('file://' + gif_path)
         
 

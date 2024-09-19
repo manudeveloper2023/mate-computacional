@@ -2,6 +2,7 @@ import algorithms.AlgorithmDijtskra as AlgorithmDijtskra
 import structures.NetworkGraph as NetworkGraph 
 import algorithms.RoadMatrix as RoadMatrix
 import algorithms.AdjacencyMatrix as AdjacencyMatrix
+import helpers.ClearScreen as ClearScreen
 
 class Application:
     def __init__(self):
@@ -10,61 +11,110 @@ class Application:
         self.roadMatrix = None
         self.networkGraph = None
         self.initializeMatrix()
-        
+
     def initializeMatrix(self):
+        ClearScreen.clear_screen()
         matrix_size = self.readSizeForMatrix()
         self.adjacencyMatrix = AdjacencyMatrix.AdjacencyMatrix(matrix_size)
-        self.adjacencyMatrix.generateMatrix()
+        self.adjacencyMatrix.generateMatrix(self.showMenuMatrix())
+        self.adjacencyMatrix.visualizeAdjacencyMatrix()
+        ClearScreen.pause() 
         self.algorithmDijkstra = AlgorithmDijtskra.AlgorithmDijstkra(self.adjacencyMatrix.getEdges())
         self.roadMatrix = RoadMatrix.RoadMatrix(self.adjacencyMatrix.getAdjacencyMatrix())
         self.networkGraph = NetworkGraph.NetworkGraph(self.adjacencyMatrix.getEdges(), self.adjacencyMatrix.getMatrixSize())
+
+    def showMenuMatrix(self):
+        typeMatrix = ""
+        while True:
+            ClearScreen.clear_screen()
+            try:    
+                print("1. Ingresar Manualmente la Matriz")
+                print("2. Generar Matriz Aleatoriamente")
+                choice = int(input("Seleccione una opción: "))
+                if choice == 1:
+                    typeMatrix = "manual"
+                    break
+                elif choice == 2:
+                    typeMatrix = "random"
+                    break
+                else:
+                    print("Opción no válida. Por favor, intente de nuevo.")
+                    ClearScreen.pause() 
+            except ValueError:
+                print("Error: Por favor, ingrese un número válido.")
+                ClearScreen.pause()  
+        return typeMatrix
+
     def readSizeForMatrix(self):
-        matrix_size = int(input("Ingresar el número de columnas y filas de la matriz A (8 <= n <= 16): "))
-        while matrix_size < 8 or matrix_size > 16:
-            matrix_size = int(input("Ingresar un número válido: "))
-        return matrix_size
+        while True:
+            try:
+                ClearScreen.clear_screen()
+                matrix_size = int(input("Ingresar el número de columnas y filas de la matriz A (8 <= n <= 16): "))
+                if 8 <= matrix_size <= 16:
+                    return matrix_size
+                else:
+                    print("Error: Ingrese un número dentro del rango 8 <= n <= 16.")
+                    ClearScreen.pause()
+            except ValueError:
+                print("Error: Por favor, ingrese un número válido.")
+                ClearScreen.pause()  
 
     def createAnimationDijstkra(self):
         start_path, end_path = self.validateStartAndEndPathInDisjktra()
         path, path_length, states = self.algorithmDijkstra.algorithmDijkstra(start_path, end_path)
-        print(path)
         compressed_path = [(path[i], path[i+1]) for i in range(len(path)-1)]
-        self.networkGraph.drawDijsktraAnimate(compressed_path, states)
+        self.networkGraph.drawDijsktraAnimate(path, compressed_path, states, path_length)
 
     def validateStartAndEndPathInDisjktra(self):
         while True:
-            self.roadMatrix.algorithmRoadMatrix()
-            print(self.adjacencyMatrix.visualizeAdjacencyMatrix())
-            print(self.roadMatrix.getRoadMatrix())
-            start_path = int(input("Ingrese el nodo inicial del grafo: ")) 
-            end_path = int(input("Ingrese el nodo final del grafo: "))
-            if not (0 <= start_path < self.adjacencyMatrix.getMatrixSize()):
-                print(f"El nodo inicial {start_path} no existe en la matriz de adyacencia.")
-                continue
-            if not (0 <= end_path < self.adjacencyMatrix.getMatrixSize()):
-                print(f"El nodo final {end_path} no existe en la matriz de adyacencia.")
-                continue
-            if not self.roadMatrix.existsRouteMap(start_path, end_path):
-                print(f"No existe una ruta entre el nodo {start_path} y el nodo {end_path}.")
-                continue
-            return start_path, end_path
+            try:
+                ClearScreen.clear_screen()
+                self.roadMatrix.algorithmRoadMatrix()
+                self.adjacencyMatrix.visualizeAdjacencyMatrix()
+                self.roadMatrix.visualizeRoadMatrix()
+                start_path = int(input("Ingrese el nodo inicial del grafo: ")) 
+                if not (0 <= start_path < self.adjacencyMatrix.getMatrixSize()):
+                    print(f"El nodo inicial {start_path} no existe en la matriz de adyacencia.")
+                    ClearScreen.pause() 
+                    continue
+                end_path = int(input("Ingrese el nodo final del grafo: "))
+                if not (0 <= end_path < self.adjacencyMatrix.getMatrixSize()):
+                    print(f"El nodo final {end_path} no existe en la matriz de adyacencia.")
+                    ClearScreen.pause()  
+                    continue
+                if not self.roadMatrix.existsRouteMap(start_path, end_path):
+                    print(f"No existe una ruta entre el nodo {start_path} y el nodo {end_path}.")
+                    ClearScreen.pause() 
+                    continue
+                return start_path, end_path
+            except ValueError:
+                print("Error: Por favor, ingrese un número válido.")
+                ClearScreen.pause()  
 
     def showMenu(self):
         while True:
-            print("\nMenu:")
-            print("1. Crear animación de Dijkstra")
-            print("2. Ingresar nueva matriz")
-            print("3. Salir")
-            choice = input("Seleccione una opción: ")
-            
-            if choice == '1':
-                self.createAnimationDijstkra()
-            elif choice == '2':
-                self.initializeMatrix()
-            elif choice == '3':
-                print("Saliendo...")
-                break
-            else:
-                print("Opción no válida. Por favor, intente de nuevo.")
+            try:
+                ClearScreen.clear_screen()
+                print("\nMenu:")
+                print("1. Crear animación de Dijkstra")
+                print("2. Ingresar nueva matriz")
+                print("3. Salir")
+                choice = input("Seleccione una opción: ")
+                
+                if choice == '1':
+                    self.createAnimationDijstkra()
+                elif choice == '2':
+                    self.initializeMatrix()
+                elif choice == '3':
+                    print("Saliendo...")
+                    ClearScreen.pause()  
+                    break
+                else:
+                    print("Opción no válida. Por favor, intente de nuevo.")
+                    ClearScreen.pause()  
+            except ValueError:
+                print("Error: Por favor, ingrese un número válido.")
+                ClearScreen.pause() 
+
     def init(self):
         self.showMenu()
