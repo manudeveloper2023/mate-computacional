@@ -13,10 +13,10 @@ class AdjacencyMatrix:
         else:
             raise ValueError("Tipo de matriz no reconocido. Usa 'random' o 'manual'.")
     def generateMatrixRandom(self):
-        self.matrix = np.random.randint(0,2, size=(self.matrixSize,self.matrixSize))
+        self.matrix = np.zeros((self.matrixSize, self.matrixSize), dtype=int)
         for i in range(self.matrixSize):
             for j in range(i,self.matrixSize):
-                if(self.matrix[i][j] or i==j):
+                if(np.random.randint(0, 2) or i==j):
                     weight = np.random.randint(1,21)
                     self.matrix[i][j] = self.matrix[j][i]  = weight
                     if (i!=j):

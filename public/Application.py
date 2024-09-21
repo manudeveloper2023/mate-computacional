@@ -64,7 +64,6 @@ class Application:
         path, path_length, states = self.algorithmDijkstra.algorithmDijkstra(start_path, end_path)
         compressed_path = compressedPathForDiklstra.compressedPathForDijsktra(path)
         self.networkGraph.drawDijsktraAnimate(path, compressed_path, states, path_length)
-
     def validateStartAndEndPathInDisjktra(self):
         while True:
             try:
@@ -109,6 +108,7 @@ class Application:
                 elif choice == '2':
                     self.initializeMatrix()
                 elif choice == '3':
+                    self.finalGreetings()
                     print("Saliendo...")
                     OSFunctions.pause()  
                     break
@@ -118,6 +118,25 @@ class Application:
             except ValueError:
                 print("Error: Por favor, ingrese un número válido.")
                 OSFunctions.pause() 
+    def header(self) :
+        width = 120
+        print("------------------------------------------------".center(width))
+        print("UNIVERSIDAD PERUANA DE CIENCIAS APLICADAS".center(width))
+        print("FACULTAD DE INGENIERIA".center(width))
+        print("------------------------------------------------".center(width))
+        print("PROGRAMA DE CAMINOS MINIMOS".center(width))
+        print("------------------------------------------------".center(width))
+        input("")
+    def finalGreetings(self):
+        width = 120
+        print("Desarrollado por: ".center(width))
+        print("Cochachi Esteban Luz - u202315609".center(width))
+        print("Diaz Duenas Vianka Araceli Graciel - u20221g118".center(width))
+        print("Henostroza Ruiz Manuel Jose - u202318698".center(width))
+        print("Oliva Cabanillas Melanie Anai - u202314313".center(width))
+        print("Pareja Villacorta Mariana Vilma - u202311066".center(width))
+        print("------------------------------------------------".center(width))
 
     def init(self):
+        self.header()
         self.showMenu()
