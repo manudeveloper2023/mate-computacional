@@ -4,11 +4,10 @@ import matplotlib.animation as animation
 from tqdm import tqdm
 import os
 class AnimateGraphDijkstra:
-    def __init__(self , networkEdge , networkNode , networkGraph ,  graph)  :
+    def __init__(self , networkEdge , networkNode , networkGraph)  :
         self.networkEdge = networkEdge 
         self.networkNode = networkNode
         self.networkGraph = networkGraph
-        self.graph = graph 
     
     def animateDijkstra(self, path , compressed_path, states ,path_length ,  ax , fig):
         fps_animation = 6 if len(states) > 60 else 4
@@ -20,10 +19,10 @@ class AnimateGraphDijkstra:
         def update(frame):
             pbar.update(1)
             self.choiceColorEdge(frame , states , path_edges , path_nodes)
-            edge_colors = [self.networkEdge.edge_colors[edge] for edge in self.graph.edges()]
-            node_colors = [self.networkNode.node_colors[node] for node in self.graph.nodes()]
-            self.drawUpdateGraph(ax=ax , node_colors=node_colors , edge_colors= edge_colors)
-            self.drawEdgeInGraph(ax , frame , states , path , path_length)
+            edge_colors = [self.networkEdge.edge_colors[edge] for edge in self.networkGraph.graph.edges()]
+            node_colors = [self.networkNode.node_colors[node] for node in self.networkGraph.graph.nodes()]
+            self.drawUpdateColorsInGraph(ax=ax , node_colors=node_colors , edge_colors= edge_colors)
+            self.drawEdgeTitleInGraph(ax , frame , states , path , path_length)
             self.refreshEdgesAndNodes()
         ani = animation.FuncAnimation(
             fig,
@@ -39,10 +38,10 @@ class AnimateGraphDijkstra:
         if not os.path.exists('output'):
             os.makedirs('output')
         ani.save('output/dijkstra_animation.gif', writer='pillow', fps=fps_animation)
-    def drawUpdateGraph(self , ax , node_colors , edge_colors):
+    def drawUpdateColorsInGraph(self , ax , node_colors , edge_colors):
         ax.clear()
         self.networkGraph.drawGraph(node_colors= node_colors , edge_colors= edge_colors)
-    def drawEdgeInGraph(self , ax , frame , states ,path , path_length):
+    def drawEdgeTitleInGraph(self , ax , frame , states ,path , path_length):
          ax.set_title(f"Paso {frame + 1} => Arista : {states[frame]}" if frame < len(states) else f"Camino Final =>{'->'.join(map(str, path))} : Peso : {path_length}")
 
     def choiceColorEdge(self , frame , states , path_edges , path_nodes):
@@ -59,9 +58,9 @@ class AnimateGraphDijkstra:
                     self.networkNode.updateNodeColor(node, "green")
                 
     def refreshEdgesAndNodes(self):
-        for edge in self.graph.edges():
+        for edge in self.networkGraph.graph.edges():
                 self.networkEdge.updateEdgeColor(edge, 'black')
-        for node in self.graph.nodes():
+        for node in self.networkGraph.graph.nodes():
             self.networkNode.updateNodeColor(node, 'lightgray')
 
     

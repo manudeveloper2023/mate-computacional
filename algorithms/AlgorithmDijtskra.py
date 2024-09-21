@@ -1,11 +1,9 @@
 import networkx as nx
 import heapq as heapriority_queue
-
+import helpers.CreateGraphForDijstkra as createGraphForDijstkra
 class AlgorithmDijstkra:
     def __init__(self, edges):
-        self.edges = edges
-        self.graph = self.createGraphFromEdges(self.edges)
-        self.position = nx.spring_layout(self.graph)
+        self.graph = createGraphForDijstkra.createGraphFromEdgesInDijstkra(edges)
     def algorithmDijkstra(self, start, target):
         distances = {node: float('inf') for node in self.graph}
         distances[start] = 0
@@ -39,13 +37,4 @@ class AlgorithmDijstkra:
 
         return path, distances[target], states
     
-    def createGraphFromEdges(self , edges):
-        graph = {}
-        for node_1, node_2, weight in edges:
-            if node_1 not in graph:
-                graph[node_1] = []
-            if node_2 not in graph:
-                graph[node_2] = []
-            graph[node_1].append((node_2, weight))
-            graph[node_2].append((node_1, weight))
-        return graph
+    

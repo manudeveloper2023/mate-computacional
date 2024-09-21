@@ -15,7 +15,7 @@ class NetworkGraph:
         self.networkEdge = networkEdge.NetworkEdge(graph=self.graph, position_edge=self.position, edge_width=1)
         self.fig, self.ax = plt.subplots(figsize=(15, 15))
         self.animateDijsktra = animateDijsktra.AnimateGraphDijkstra(networkEdge=self.networkEdge, networkNode=self.networkNode,
-                                                    graph=self.graph, networkGraph=self)
+                                                    networkGraph=self)
     def drawGraph(self, node_colors=None, edge_colors=None):
         self.ax.clear()
         self.ax.axis('off')

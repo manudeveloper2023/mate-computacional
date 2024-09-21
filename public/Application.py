@@ -3,7 +3,7 @@ import structures.NetworkGraph as NetworkGraph
 import algorithms.RoadMatrix as RoadMatrix
 import algorithms.AdjacencyMatrix as AdjacencyMatrix
 import helpers.OSFunctions as OSFunctions
-
+import helpers.CompressedPathForDijkstra as compressedPathForDiklstra
 class Application:
     def __init__(self):
         self.adjacencyMatrix = None
@@ -62,7 +62,7 @@ class Application:
     def createAnimationDijstkra(self):
         start_path, end_path = self.validateStartAndEndPathInDisjktra()
         path, path_length, states = self.algorithmDijkstra.algorithmDijkstra(start_path, end_path)
-        compressed_path = [(path[i], path[i+1]) for i in range(len(path)-1)]
+        compressed_path = compressedPathForDiklstra.compressedPathForDijsktra(path)
         self.networkGraph.drawDijsktraAnimate(path, compressed_path, states, path_length)
 
     def validateStartAndEndPathInDisjktra(self):

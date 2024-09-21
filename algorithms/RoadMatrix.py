@@ -13,7 +13,7 @@ class RoadMatrix:
                 if row != column:
                     if(self.road_matrix[row][column]):
                         for column_fill in range(len(self.road_matrix[row])):
-                            if not self.road_matrix[row][column_fill]:
+                            if not self.road_matrix[row][column_fill] and self.road_matrix[column][column_fill]:
                                 self.road_matrix[row][column_fill] = self.road_matrix[column][column_fill]
     def visualizeRoadMatrix(self):
         print("Matriz de Caminos")
