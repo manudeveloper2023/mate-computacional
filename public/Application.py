@@ -10,6 +10,7 @@ class Application:
         self.algorithmDijkstra = None
         self.roadMatrix = None
         self.networkGraph = None
+        self.header()
         self.initializeMatrix()
 
     def initializeMatrix(self):
@@ -48,7 +49,6 @@ class Application:
     def readSizeForMatrix(self):
         while True:
             try:
-                OSFunctions.clear_screen()
                 matrix_size = int(input("Ingresar el número de columnas y filas de la matriz A (8 <= n <= 16): "))
                 if 8 <= matrix_size <= 16:
                     return matrix_size
@@ -126,7 +126,7 @@ class Application:
         print("------------------------------------------------".center(width))
         print("PROGRAMA DE CAMINOS MINIMOS".center(width))
         print("------------------------------------------------".center(width))
-        input("")
+        OSFunctions.pause()
     def finalGreetings(self):
         width = 120
         print("Desarrollado por: ".center(width))
@@ -138,5 +138,4 @@ class Application:
         print("------------------------------------------------".center(width))
 
     def init(self):
-        self.header()
         self.showMenu()
