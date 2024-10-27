@@ -1,6 +1,6 @@
 import numpy as np 
 import helpers.GraphMatrixDisplay as GraphMatrixDisplay 
-
+import helpers.outputsSystem as outputsSystem
 class RoadMatrix:
     def __init__(self , matrix):
         self.road_matrix= self.transformMatrixBinary(matrix)
@@ -15,8 +15,19 @@ class RoadMatrix:
                         for column_fill in range(len(self.road_matrix[row])):
                             if not self.road_matrix[row][column_fill] and self.road_matrix[column][column_fill]:
                                 self.road_matrix[row][column_fill] = self.road_matrix[column][column_fill]
+
+
+    def availableRoutes(self):
+            for row in range(len(self.road_matrix)):
+                routes = []  
+                for column in range(len(self.road_matrix[row])):
+                    if self.road_matrix[row][column]:
+                       routes.append(column) 
+                if routes:
+                    print(f"El Nodo {row} tiene caminos para: {routes}")
+
     def visualizeRoadMatrix(self):
-        print("Matriz de Caminos")
+        outputsSystem.sendMessage("Matriz de Caminos")
         GraphMatrixDisplay.displayRoadMatrix(self.road_matrix , len(self.road_matrix[0]))
     def existsRouteMap(self , nodeA , nodeB):
         return self.road_matrix[nodeA][nodeB]
