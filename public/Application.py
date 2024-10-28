@@ -42,6 +42,7 @@ class Application:
             try:
                 OSFunctions.clear_screen()
                 self.roadMatrix.algorithmRoadMatrix()
+                outputsSystem.sendMessage(f"Matriz de {self.adjacencyMatrix.getMatrixSize()} x  {self.adjacencyMatrix.getMatrixSize()}")
                 outputsSystem.sendMessage("Ingrese el nodo inicial del grafo: ")
                 start_path = int(input()) 
                 outputsSystem.sendMessage("Rutas que puede tomar el nodo")

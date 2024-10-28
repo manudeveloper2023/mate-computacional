@@ -19,7 +19,8 @@ class RoadMatrix:
 
     def availableRoutes(self, target):
             routes = []
-            for column in range(len(self.road_matrix[target])):routes.append(column) 
+            for column in range(len(self.road_matrix[target])):
+                if target!=column:routes.append(column) 
             print(f"El Nodo {target} tiene caminos para: {routes}")
 
     def visualizeRoadMatrix(self):
