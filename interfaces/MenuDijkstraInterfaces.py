@@ -5,7 +5,6 @@ class MenuDijkstraInterfaces :
         self.showMenu = False
     def showMainMenu(self) : 
         OsFunctions.clear_screen()
-        reduceTiming = 0.005
         if not self.showMenu:
             lines = [
                     "╔════════════════════════════════════════════════════════════════════════════════════════════════╗",

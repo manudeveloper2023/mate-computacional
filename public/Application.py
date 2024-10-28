@@ -42,9 +42,10 @@ class Application:
             try:
                 OSFunctions.clear_screen()
                 self.roadMatrix.algorithmRoadMatrix()
-                self.roadMatrix.availableRoutes()
                 outputsSystem.sendMessage("Ingrese el nodo inicial del grafo: ")
                 start_path = int(input()) 
+                outputsSystem.sendMessage("Rutas que puede tomar el nodo")
+                self.roadMatrix.availableRoutes(start_path)
                 if not (0 <= start_path < self.adjacencyMatrix.getMatrixSize()):
                     outputsSystem.messageError(f"El nodo inicial {start_path} no existe en la matriz de adyacencia.")
                     time.sleep(1)

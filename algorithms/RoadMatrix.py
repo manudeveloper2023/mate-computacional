@@ -17,14 +17,10 @@ class RoadMatrix:
                                 self.road_matrix[row][column_fill] = self.road_matrix[column][column_fill]
 
 
-    def availableRoutes(self):
-            for row in range(len(self.road_matrix)):
-                routes = []  
-                for column in range(len(self.road_matrix[row])):
-                    if self.road_matrix[row][column]:
-                       routes.append(column) 
-                if routes:
-                    print(f"El Nodo {row} tiene caminos para: {routes}")
+    def availableRoutes(self, target):
+            routes = []
+            for column in range(len(self.road_matrix[target])):routes.append(column) 
+            print(f"El Nodo {target} tiene caminos para: {routes}")
 
     def visualizeRoadMatrix(self):
         outputsSystem.sendMessage("Matriz de Caminos")
